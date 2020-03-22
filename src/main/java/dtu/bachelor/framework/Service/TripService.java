@@ -4,6 +4,7 @@ import dtu.bachelor.framework.Dao.TripDaoImplementation;
 import dtu.bachelor.framework.Model.Trip;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,29 +31,35 @@ public class TripService implements TripInterface {
         tripDao.updateTrip(trip);
     }
 
-/*
+
     @Override
-    public Optional<Trip> findById(Trip trip) {
-        tripDao.
+    public List<Trip> findById(int id) {
+        return tripDao.findById(id);
     }
 
     @Override
-    public Optional<Trip> findByTime(Trip trip) {
-        return Optional.empty();
+    public List<Trip> findByTimes(LocalDateTime time1, LocalDateTime time2) {
+        return tripDao.findByTimes(time1,time2);
     }
 
     @Override
-    public Optional<Trip> findByType(Trip trip) {
-        return Optional.empty();
+    public List<Trip> findByType(String type) {
+       return tripDao.findByType(type);
     }
 
     @Override
-    public Optional<Trip> findByValue(Trip trip) {
-        return Optional.empty();
-    }*/
+    public List<Trip> findByValue(int value) {
+        return tripDao.findByValue(value);
+    }
 
     @Override
-    public void deleteTrip(Trip trip) {
+    public void deleteTrip(int id) { tripDao.deleteTrip(id); }
 
+    @Override
+    public void deleteAllTrips(String password) {
+        if (password.equals("Alexanderfc1997")){
+            tripDao.deleteAllTrips();
+        } else {
+        }
     }
 }
