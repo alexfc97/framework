@@ -2,7 +2,9 @@ package dtu.bachelor.framework.Service;
 
 import dtu.bachelor.framework.Model.Trip;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface TripInterface {
 
@@ -11,15 +13,16 @@ public interface TripInterface {
     void addNewTrip(Trip trip);
 
     void replaceTrip(Trip trip);
-/*
-    Optional<Trip> findById(Trip trip);
 
-    Optional<Trip> findByTime(Trip trip);
+    List<Trip> findById(int id);
 
-    Optional<Trip> findByType(Trip trip);
+    List<Trip> findByTimes(LocalDateTime time1,LocalDateTime time2);
 
-    Optional<Trip> findByValue(Trip trip);*/
+    List<Trip> findByType(String type);
 
-    void deleteTrip(Trip trip);
+    List<Trip> findByValue(int Value);
 
+    void deleteTrip(int id);
+
+    void deleteAllTrips(String password);
 }
