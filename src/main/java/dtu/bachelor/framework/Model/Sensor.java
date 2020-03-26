@@ -2,6 +2,7 @@ package dtu.bachelor.framework.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Sensor {
@@ -9,6 +10,9 @@ public class Sensor {
     @Id
     private String id;
     private String type;
+
+    @OneToOne(mappedBy = "sensor")
+    private Trip trip;
 
     public Sensor() {}
 

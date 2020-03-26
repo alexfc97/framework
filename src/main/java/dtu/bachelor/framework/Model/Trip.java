@@ -1,9 +1,6 @@
 package dtu.bachelor.framework.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,7 +9,10 @@ public class Trip {
 
     @Id
     private int id;
-    private String sensor;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sensor_id")
+    private Sensor sensor;
     private LocalDateTime time;
     private String type;
     private int value;
@@ -21,7 +21,7 @@ public class Trip {
 
     public Trip() {}
 
-    public Trip(int id, String sensor, LocalDateTime time, String type, int value, double latitude, double longitude) {
+    public Trip(int id, Sensor sensor, LocalDateTime time, String type, int value, double latitude, double longitude) {
         this.id=id;
         this.sensor = sensor;
         this.time=time;
@@ -39,9 +39,9 @@ public class Trip {
         this.id = id;
     }
 
-    public String getSensor() { return sensor; }
+    public Sensor getSensor() { return sensor; }
 
-    public void setSensor(String sensor) { this.sensor = sensor; }
+    public void setSensor(Sensor sensor) { this.sensor = sensor; }
 
     public LocalDateTime getTime() {
         return time;
