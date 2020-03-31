@@ -20,6 +20,8 @@ public interface MeasurementRepository extends JpaRepository<Measurement, Intege
 
     List<Measurement> findByLongitude(double measurementlongitude);
 
+    List<Measurement> findBetweenTimes(LocalDateTime time1, LocalDateTime time2);
+
     void deleteByTime(LocalDateTime time);
 
     void deleteByType(String type);
