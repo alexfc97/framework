@@ -17,7 +17,8 @@ public class Measurement implements Serializable {
 
     private int tripid;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "Sensor_id")
     @JsonBackReference
     private Sensor sensor;
 
