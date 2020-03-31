@@ -38,6 +38,12 @@ public class MeasurementController {
         return measurementRepository.findByTime(time);
     }
 
+    @GetMapping("/measurementsbytimes/{time1}/{time2}")
+    private List<Measurement> getMeasurementsBetweenTimes(@PathVariable LocalDateTime time1,
+                                                     @PathVariable LocalDateTime time2) {
+        return measurementRepository.findBetweenTimes(time1,time2);
+    }
+
     @GetMapping("/measurementsbytype/{type}")
     private List<Measurement> getMeasurementsByType(@PathVariable String type) {
         return measurementRepository.findByType(type);
