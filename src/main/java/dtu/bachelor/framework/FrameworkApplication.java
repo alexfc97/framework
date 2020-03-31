@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class FrameworkApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(FrameworkApplication.class);
-
 	public static void main(String[] args) {
 		SpringApplication.run(FrameworkApplication.class, args);
 	}
