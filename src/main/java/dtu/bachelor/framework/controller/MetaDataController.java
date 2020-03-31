@@ -1,4 +1,4 @@
-package dtu.bachelor.framework.Controller;
+package dtu.bachelor.framework.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
