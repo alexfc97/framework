@@ -23,6 +23,7 @@ public class MeasurementController {
     @Autowired
     private SensorRepository sensorRepository;
 
+    @CrossOrigin
     @GetMapping("/measurements")
     private List<Measurement> getAllMeasurements() {
         return measurementRepository.findAll();
