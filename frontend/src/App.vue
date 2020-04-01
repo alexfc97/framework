@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <Tables class="tables"/>
+  <div id="main">
+    <MainPage/>
   </div>
 </template>
 
 <script>
-  import Tables from "./components/Tables";
+  import MainPage from "./components/MainPage";
   import 'bootstrap/dist/css/bootstrap.css';
   import 'bootstrap-vue/dist/bootstrap-vue.css';
 
@@ -13,7 +13,7 @@
   export default {
     name: 'App',
     components: {
-      Tables
+      MainPage
     }
   }
 </script>
