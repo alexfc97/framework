@@ -14,7 +14,7 @@ public class Sensor implements Serializable {
     @Id
     private int id;
     private String type;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sensor")
+    @OneToMany(mappedBy = "sensor")
     @JsonManagedReference
     private Collection<Measurement> measurement;
 

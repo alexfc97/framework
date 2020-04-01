@@ -4,11 +4,10 @@
             Please choose what table you would like to view!
         </h3>
         <div class="col-4 offset-4">
-            <b-form-select v-model="selected" :options="options"></b-form-select>
+            <b-form-select v-model="tableMessage" :options="measurementOptions" v-on:keyup="emitToParent"></b-form-select>
             <div align="center" class="mt-3">
                 Selected:
-                <strong>{{ selected }}
-                </strong>
+                <strong>{{ tableMessage }}</strong>
             </div>
         </div>
     </section>
@@ -19,8 +18,8 @@
         name: "radioButtons",
         data() {
             return {
-                selected:null,
-                options: [
+                tableMessage: '',
+                measurementOptions: [
                     {
                         value: null,
                         text:'Please select an option'
@@ -41,8 +40,16 @@
                         value: 'Measurement Types',
                         text: 'Measurement Types'
                     }
+                ],
+                sensorOptions: [
+
                 ]
 
+            }
+        },
+        methods: {
+            emitToParent () {
+                this.$emit('childToParent',this.tableMessage)
             }
         }
     }

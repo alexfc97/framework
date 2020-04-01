@@ -17,7 +17,7 @@ public class Measurement implements Serializable {
 
     private int tripid;
 
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Sensor_id")
     @JsonBackReference
     private Sensor sensor;
@@ -32,4 +32,11 @@ public class Measurement implements Serializable {
 
     private double longitude;
 
+    public int getSensorId(){
+        return sensor.getId();
+    }
+
+    public String getSensorType() {
+        return sensor.getType();
+    }
 }

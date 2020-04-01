@@ -69,6 +69,7 @@ public class MeasurementController {
     private void addMeasurement(@RequestBody Measurement measurement) {
         sensorRepository.findById(measurement.getSensor().getId())
                 .map(sensor -> measurementRepository.save(measurement)).orElseThrow(() -> new ResourceNotFoundException("Sensor not found with id:" + measurement.getSensor().getId()));
+
     }
 
     @DeleteMapping("/deleteall/{password}")

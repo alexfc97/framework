@@ -44,9 +44,11 @@
                             ></b-form-select>
                         </b-form-group>
                     </b-col>
-
                 </b-row>
 
+                <h1>
+                    {{table}}
+                </h1>
                 <b-table align="center" sticky-header="500px" bordered small striped hover :items="tripData" :fields="fields">
                 </b-table>
             </b-container>
@@ -64,7 +66,9 @@
 
     export default {
         name: "Tables",
-        props:['table'],
+        props:{
+            table: String
+        },
         data() {
             return {
                 tripData: [],

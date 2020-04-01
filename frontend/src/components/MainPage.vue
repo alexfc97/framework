@@ -1,7 +1,7 @@
 <template>
     <div id="main">
-        <SelectTable class="select"/>
-        <Tables class="tables" table=""/>
+        <SelectTable class="select" v-on:childToParent="onTableClick"/>
+        <Tables class="tables" :table="tablePicked" />
     </div>
 </template>
 
@@ -11,9 +11,19 @@
 
     export default {
         name: "main",
+        data() {
+            return {
+                tablePicked: '',
+            }
+        },
         components: {
             SelectTable,
             Tables
+        },
+        methods: {
+            onTableClick (value) {
+                this.tablePicked = value
+            }
         }
     }
 </script>
