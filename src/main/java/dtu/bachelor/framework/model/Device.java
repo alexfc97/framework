@@ -5,18 +5,17 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
 public class Device {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private int deviceid;
 
     private int carid;
 
     @OneToMany(mappedBy = "device")
-    @JsonManagedReference
-    private Collection<Sensor> sensors;
+    private List<Sensor> sensors;
 }

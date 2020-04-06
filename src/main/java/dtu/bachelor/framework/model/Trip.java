@@ -9,25 +9,26 @@ import java.util.List;
 
 @Entity
 @Data
-public class SensorType {
+public class Trip {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    private String type;
+    private String test;
 
-    @OneToMany(mappedBy = "sensorType")
-    private List<Sensor> sensor;
-
-
+    @OneToMany(mappedBy = "trip")
+    private List<Measurement> measurement;
 
 
-    public List<Sensor> getSensor() {
-        return sensor;
+
+
+
+    public List<Measurement> getMeasurement() {
+        return measurement;
     }
 
-    public void setSensor(List<Sensor> sensor) {
-        this.sensor = sensor;
+    public void setMeasurement(List<Measurement> measurement) {
+        this.measurement = measurement;
     }
 }

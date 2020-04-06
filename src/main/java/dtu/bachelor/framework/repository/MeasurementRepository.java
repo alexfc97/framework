@@ -12,7 +12,9 @@ import java.util.List;
 
 @Repository
 public interface MeasurementRepository extends JpaRepository<Measurement, Integer> {
+    /*
     List<Measurement> findByType(String measurementtype);
+     */
 
     List<Measurement> findByValue(Integer measurementvalue);
 
@@ -28,8 +30,9 @@ public interface MeasurementRepository extends JpaRepository<Measurement, Intege
             @Param("time2") LocalDateTime time2);
 
     void deleteByTime(LocalDateTime time);
-
+    /*
     void deleteByType(String type);
+     */
 
     void deleteByValue(int value);
 
