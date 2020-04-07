@@ -1,16 +1,18 @@
 <template>
     <div id="main">
         <SelectTable class="select" v-on:childToParent="onTableClick"/>
-        <Tables class="tables" :table="tablePicked" />
+        <!-- <Tables class="tables" :table="tablePicked" /> -->
+        <TablesTesting/>
     </div>
 </template>
 
 <script>
-    import Tables from "./Tables";
+    //import Tables from "./Tables";
     import SelectTable from "./SelectTable";
+    import TablesTesting from "./TablesTesting";
 
     export default {
-        name: "main",
+        name: "mainPage",
         data() {
             return {
                 tablePicked: '',
@@ -18,7 +20,7 @@
         },
         components: {
             SelectTable,
-            Tables
+            TablesTesting
         },
         methods: {
             onTableClick (value) {

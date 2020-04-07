@@ -49,17 +49,15 @@
                 <h1>
                     {{table}}
                 </h1>
-                <b-table align="center" sticky-header="500px" bordered small striped hover :items="tripData" :fields="fields">
+                <b-table align="center" sticky-header="500px" bordered small striped hover :items="tripDataTest" :fields="measurementfields">
                 </b-table>
             </b-container>
         </div>
     </div>
 </template>
 
-
 <script>
     import axios from 'axios';
-
 
     const measurementURL = 'http://localhost:8081/measurements/api/measurements';
     // const sensorURL = 'http://localhost:8081/sensors/api/sensors';
@@ -72,6 +70,25 @@
         data() {
             return {
                 tripData: [],
+                tripDataTest: [
+                    {
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                    {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                    }],
                 measurementfields: [
                     {
                         key:'measurementid',
