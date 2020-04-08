@@ -25,6 +25,7 @@
         methods: {
             onTableClick (value) {
                 this.tablePicked = value
+                console.log(value);
             }
         }
     }
