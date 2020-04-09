@@ -1,59 +1,48 @@
 <template>
-    <div align="center" class="table-group">
-        <div class="w-75">
-            <b-container>
-                <b-row>
-                    <b-col class="my-1">
-                        <b-form-group
-                                label="Filter"
-                                label-cols-sm="3"
-                                label-align-sm="right"
-                                label-size="sm"
-                                label-for="filterInput"
-                                class="mb-0"
-                        >
-                            <b-input-group size="sm">
-                                <b-form-input
-                                        v-model="filter"
-                                        type="search"
-                                        id="filterInput"
-                                        placeholder="Type to Search"
-                                ></b-form-input>
-                                <b-input-group-append>
-                                    <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-                                </b-input-group-append>
-                            </b-input-group>
-                        </b-form-group>
-                    </b-col>
-                    <b-col class="my-1">
-                        <b-form-group
-                                label="Per page"
-                                label-cols-sm="3"
-                                label-cols-md="4"
-                                label-cols-lg="6"
-                                label-align-sm="right"
-                                label-size="sm"
-                                label-for="perPageSelect"
-                                class="mb-0"
-                        >
-                            <b-form-select
-                                    v-model="perPage"
-                                    id="perPageSelect"
-                                    size="sm"
-                                    :options="pageOptions"
-                            ></b-form-select>
-                        </b-form-group>
-                    </b-col>
-                </b-row>
-
-                <h1>
-                    {{table}}
-                </h1>
-                <b-table align="center" sticky-header="500px" bordered small striped hover :items="tripDataTest" :fields="measurementfields">
-                </b-table>
-            </b-container>
+    <b-container fluid>
+        <div align="center" class="mt-3">
+            Selected:
+            <strong>{{ table }}</strong>
         </div>
-    </div>
+        <!-- User Interface controls -->
+        <b-row>
+            <b-col class="col-5 offset-3 mt-2">
+                <b-form-group
+                        label="Filter"
+                        label-cols-sm="3"
+                        label-align-sm="right"
+                        label-size="sm"
+                        label-for="filterInput"
+                        class="mb-0"
+                >
+                    <b-input-group size="sm">
+                        <b-form-input
+                                v-model="filter"
+                                type="search"
+                                id="filterInput"
+                                placeholder="Type to Search"
+                        ></b-form-input>
+                        <b-input-group-append>
+                            <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                        </b-input-group-append>
+                    </b-input-group>
+                </b-form-group>
+            </b-col>
+        </b-row>
+
+        <!-- Main table element -->
+        <b-table
+                small
+                striped
+                hover
+                sticky-header="500px"
+                :items="items"
+                :fields="fields"
+                :filter="filter"
+                class="mt-2"
+        >
+        </b-table>
+    </b-container>
 </template>
 
 <script>
@@ -65,13 +54,15 @@
     export default {
         name: "Tables",
         props:{
-            table: String
+            table: String,
         },
         data() {
             return {
-                tripData: [],
-                tripDataTest: [
-                    {
+                tripData:[
+
+                ],
+                items: [
+                {
                     "measurementid":69,
                     "tripid":420,
                     "time":"2020-04-06T07:14:01.071",
@@ -80,7 +71,7 @@
                     "latitude":32.68741,
                     "longitude":25.01773
                 },
-                    {
+                {
                     "measurementid":100,
                     "tripid":200,
                     "time":"2020-04-06T07:14:01.071",
@@ -88,8 +79,118 @@
                     "value": 300,
                     "latitude":32.01773,
                     "longitude":25.01773
+            },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
+                },
+                {
+                    "measurementid":100,
+                    "tripid":200,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 300,
+                    "latitude":32.01773,
+                    "longitude":25.01773
+                },{
+                    "measurementid":69,
+                    "tripid":420,
+                    "time":"2020-04-06T07:14:01.071",
+                    "type":"Temperature",
+                    "value": 120,
+                    "latitude":32.68741,
+                    "longitude":25.01773
                     }],
-                measurementfields: [
+                fields: [
                     {
                         key:'measurementid',
                         sortable:true
@@ -111,7 +212,9 @@
                     },{
                         key: 'longitude',
                         sortable:true
-                    }]
+                    }],
+                filter: null,
+                filterOn: []
             }
         },
         async created() {
@@ -126,6 +229,6 @@
     }
 </script>
 
-<style>
+<style scoped>
 
 </style>
