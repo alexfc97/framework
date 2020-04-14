@@ -1,34 +1,30 @@
 package dtu.bachelor.framework.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
-public class Trip {
+public class Trip implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private int tripid;
 
-    private String test;
-
-    @OneToMany(mappedBy = "trip")
-    private List<Measurement> measurement;
-
-
-
-
+    @OneToMany(mappedBy = "trip",cascade=CascadeType.ALL)
+    private List<Measurement> measurements;
 
     public List<Measurement> getMeasurement() {
-        return measurement;
+        return measurements;
     }
 
-    public void setMeasurement(List<Measurement> measurement) {
-        this.measurement = measurement;
+    public void setMeasurement(List<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }

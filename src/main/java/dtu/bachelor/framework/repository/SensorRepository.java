@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface SensorRepository extends JpaRepository<Sensor,Integer> {
 
-    Sensor findSensorsById(int id);
+    Sensor findSensorsBySensorid(int id);
 
     List<Sensor> findSensorsBySensorType(String type);
 

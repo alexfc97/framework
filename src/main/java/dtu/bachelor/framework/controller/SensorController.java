@@ -28,7 +28,7 @@ public class SensorController {
 
     @GetMapping("/sensorsById/{id}")
     private Sensor getSensorsById(@PathVariable int id) {
-        return sensorRepository.findSensorsById(id);
+        return sensorRepository.findSensorsBySensorid(id);
     }
 
     @GetMapping("/sensorsByType/{type}")
@@ -38,9 +38,13 @@ public class SensorController {
 
     @PostMapping("/inputsensor")
     private void addSensor(@RequestBody Sensor sensor) {
-        deviceRepository.findById(sensor.getDeviceId())
-                .map(device -> sensorRepository.save(sensor))
-                .orElseThrow(() -> new ResourceNotFoundException("Device not found with id: " + sensor.getDevice().getDeviceid()));
+        if (!deviceRepository.existsById(sensor.getDevice().getDeviceid())){
+            throw new ResourceNotFoundException("Device does not with id:" + sensor.getDevice().getDeviceid());
+        } else {
+            if (!sensorRepository.existsById(sensor.getSensorid())){
+                sensorRepository.save(sensor);
+            } else throw new ResourceNotFoundException("Sensor already exists with id:" + sensor.getSensorid());
+        }
     }
 
     @DeleteMapping("/deleteById/{id}")
