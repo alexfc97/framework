@@ -30,6 +30,16 @@
             </b-col>
         </b-row>
 
+        <b-row>
+            <download-csv
+                    class="btn btn-primary offset-10"
+                    :data="items"
+                    name = "tripdata.csv">
+                Download Data
+            </download-csv>
+
+        </b-row>
+
         <!-- Main table element -->
         <b-table
                 small
