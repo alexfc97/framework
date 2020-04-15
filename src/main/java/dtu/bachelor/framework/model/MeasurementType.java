@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class SensorType implements Serializable {
+public class MeasurementType implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -18,17 +18,15 @@ public class SensorType implements Serializable {
 
     private String type;
 
-    @OneToMany(mappedBy = "sensorType")
-    private List<Sensor> sensor;
+    @OneToMany(mappedBy = "measurementtype",cascade = CascadeType.ALL)
+    private List<Measurement> measurement;
 
-
-
-
-    public List<Sensor> getSensor() {
-        return sensor;
+    public List<Measurement> getMeasurement() {
+        return measurement;
     }
 
-    public void setSensor(List<Sensor> sensor) {
-        this.sensor = sensor;
+    public void setMeasurement(List<Measurement> measurement) {
+        this.measurement = measurement;
     }
 }
+

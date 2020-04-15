@@ -15,20 +15,39 @@ public class Measurement implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int measurementid;
 
-    private int tripid;
-
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "Sensor_id")
+    @JsonBackReference(value = "sensor")
     private Sensor sensor;
 
-    private LocalDateTime time;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "trip_id")
+    @JsonBackReference(value = "trip")
+    private Trip trip;
 
-    private String type;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "Measurement_id")
+    @JsonBackReference(value = "measurementtype")
+    private MeasurementType measurementtype;
+
+    private LocalDateTime time;
 
     private int value;
 
     private double latitude;
 
     private double longitude;
+
+    // public int getSensorId(){ return sensor.getSensorid(); }
+
+    public String gettype() { return measurementtype.getType(); }
+
+    public int getTripId(){ return trip.getTripid(); }
+
+    // public int getMeasurementTypeId() { return measurementtype.getId(); }
+
+    // public int getDeviceId() { return sensor.getDeviceId(); }
+
+    // public int getCarId(){ return sensor.getCarId(); }
 
 }
