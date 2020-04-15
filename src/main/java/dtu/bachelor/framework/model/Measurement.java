@@ -40,7 +40,7 @@ public class Measurement implements Serializable {
 
     // public int getSensorId(){ return sensor.getSensorid(); }
 
-    public String getMeasurementtype() { return measurementtype.getType(); }
+    public String gettype() { return measurementtype.getType(); }
 
     public int getTripId(){ return trip.getTripid(); }
 

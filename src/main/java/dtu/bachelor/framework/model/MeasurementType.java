@@ -18,7 +18,7 @@ public class MeasurementType implements Serializable {
 
     private String type;
 
-    @OneToMany(mappedBy = "measurementtype")
+    @OneToMany(mappedBy = "measurementtype",cascade = CascadeType.ALL)
     private List<Measurement> measurement;
 
     public List<Measurement> getMeasurement() {
