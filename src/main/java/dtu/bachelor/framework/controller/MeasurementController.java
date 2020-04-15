@@ -84,6 +84,12 @@ public class MeasurementController {
             throw new ResourceNotFoundException("Sensor not found with id:" + measurement.getSensor().getSensorid());
         } else {
             if (!measurementRepository.existsById(measurement.getMeasurementid())){
+                if (!tripRepository.existsById(measurement.getTripId())) {
+                    tripRepository.save(measurement.getTrip());
+                }
+                if (!measurementTypeRepository.existsById(measurement.getMeasurementtype().getId())){
+                    measurementTypeRepository.save(measurement.getMeasurementtype());
+                }
                 measurementRepository.save(measurement);
             } else throw new ResourceNotFoundException("Measurement already exists with id:" + measurement.getMeasurementid());
         }

@@ -41,6 +41,11 @@ public class Interpolation {
     }
 
     private void LinearInterpolation(List<DoubleList> locationlist) {
+       int c = -1;
+       for (int i = 0; i<locationlist.size()-1;i++){
+           for (DoubleList point : locationlist){
+           }
+       }
     }
 }
 
