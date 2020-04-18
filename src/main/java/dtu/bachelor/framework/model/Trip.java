@@ -17,12 +17,8 @@ public class Trip implements Serializable {
     @Id
     private int tripid;
 
-    @OneToMany(mappedBy = "trip",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "trip")
     private List<Measurement> measurements;
-
-    public List<Measurement> getMeasurement() {
-        return measurements;
-    }
 
     public void setMeasurement(List<Measurement> measurements) {
         this.measurements = measurements;
