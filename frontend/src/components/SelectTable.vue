@@ -3,12 +3,8 @@
         <h3 align="center">
             Please choose what table you would like to view!
         </h3>
-        <div class="col-4 offset-4">
-            <b-form-select v-model="tableMessage" :options="measurementOptions" v-on:change="$emit(tableMessage)"></b-form-select>
-            <div align="center" class="mt-3">
-                Selected:
-                <strong>{{ tableMessage }}</strong>
-            </div>
+        <div class="col-4 offset-4 mb-4">
+            <b-form-select v-model="tableMessage" :options="measurementOptions" v-on:change="emitToParent"></b-form-select>
         </div>
     </section>
 </template>
@@ -39,6 +35,10 @@
                     {
                         value: 'Measurement Types',
                         text: 'Measurement Types'
+                    },
+                    {
+                        value: 'Devices',
+                        text: 'Devices'
                     }
                 ],
                 sensorOptions: [

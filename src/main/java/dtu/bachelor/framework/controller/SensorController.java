@@ -26,6 +26,9 @@ public class SensorController {
         return sensorRepository.findAll();
     }
 
+    @GetMapping("/exists/{id}")
+    private boolean sensorExists(@PathVariable int id) { return sensorRepository.existsById(id);}
+
     @GetMapping("/sensorsById/{id}")
     private Sensor getSensorsById(@PathVariable int id) {
         return sensorRepository.findSensorsBySensorid(id);

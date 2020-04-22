@@ -10,17 +10,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/devices/api")
+@CrossOrigin
 public class DeviceController {
 
     @Autowired
     private DeviceRepository deviceRepository;
 
     @GetMapping("/devices")
+    @CrossOrigin
     private List<Device> getAllDevices() {
         return deviceRepository.findAll();
     }
 
+    @GetMapping("/exists/{id}")
+    @CrossOrigin
+    private boolean deviceExists(@PathVariable int id) { return deviceRepository.existsById(id);}
+
     @PostMapping("/inputdevice")
+    @CrossOrigin
     private void addDevice(@RequestBody Device device) {
         if (!deviceRepository.existsById(device.getDeviceid())){
             deviceRepository.save(device);

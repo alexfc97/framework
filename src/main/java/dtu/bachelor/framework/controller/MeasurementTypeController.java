@@ -15,6 +15,7 @@ public class MeasurementTypeController {
     private MeasurementTypeRepository measurementTypeRepository;
 
     @GetMapping("/measurementtypes")
+    @CrossOrigin
     private List<MeasurementType> getAllMeasurementTypes(){return measurementTypeRepository.findAll();}
 
     @DeleteMapping("/deletebyid/{id}")
