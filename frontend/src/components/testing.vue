@@ -94,12 +94,11 @@
                 downloadName: 'idk',
                 filter: null,
                 filterOn: [],
-                measurementData: [
-                ],
-                deviceData:[
-                ],
-                typeData:[
-                ],
+                sourceTypeData:[],
+                deviceData:[],
+                tripData:[],
+                measurementData: [],
+                typeData:[],
                 tripFields: [
                     {
                         key: 'measurementid', label: 'Measurement ID', sortable: true
