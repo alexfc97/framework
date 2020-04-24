@@ -35,7 +35,7 @@
                             v-model="filterOn"
                             class="mt-1"
                             @change="download">
-                            <b-form-checkbox v-for="key in tripFields" :key="key.key" :value="key.key">{{key.label}}</b-form-checkbox>
+                            <b-form-checkbox v-for="key in MeasurementFields" :key="key.key" :value="key.key">{{key.label}}</b-form-checkbox>
                     </b-form-checkbox-group>
                 </b-form-group>
             </b-col>
@@ -65,10 +65,9 @@
                 </download-csv>
             </b-col>
         </b-row>
-
         <b-table
             :items="measurementData"
-            :fields="tripFields"
+            :fields="MeasurementFields"
             :filter="filter"
             :filterIncludedFields="filterOn"
             striped
@@ -99,7 +98,10 @@
                 tripData:[],
                 measurementData: [],
                 typeData:[],
-                tripFields: [
+                sourceTypeFields:[],
+                DeviceFields:[],
+                TripFields:[],
+                MeasurementFields:[
                     {
                         key: 'measurementid', label: 'Measurement ID', sortable: true
                     },
