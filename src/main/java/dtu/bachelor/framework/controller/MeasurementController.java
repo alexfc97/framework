@@ -2,12 +2,12 @@
 package dtu.bachelor.framework.controller;
 
 import dtu.bachelor.framework.exception.ResourceNotFoundException;
-import dtu.bachelor.framework.model.Device;
 import dtu.bachelor.framework.model.Measurement;
-import dtu.bachelor.framework.model.MeasurementType;
-import dtu.bachelor.framework.repository.*;
+import dtu.bachelor.framework.repository.DeviceRepository;
+import dtu.bachelor.framework.repository.MeasurementRepository;
+import dtu.bachelor.framework.repository.MeasurementTypeRepository;
+import dtu.bachelor.framework.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +21,6 @@ public class MeasurementController {
 
     @Autowired
     private MeasurementRepository measurementRepository;
-
-    @Autowired
-    private SensorRepository sensorRepository;
 
     @Autowired
     private DeviceRepository deviceRepository;
@@ -40,7 +37,7 @@ public class MeasurementController {
         return measurementRepository.findAll();
     }
 
-    @GetMapping("/measurementsbyid/{id}")
+    /*@GetMapping("/measurementsbyid/{id}")
     private Optional<Measurement> getMeasurementsById(@PathVariable int id) {
         return measurementRepository.findById(id);
     }
@@ -55,13 +52,11 @@ public class MeasurementController {
                                                      @PathVariable LocalDateTime time2) {
         return measurementRepository.findBetweenTimes(time1,time2);
     }
-/*
+
     @GetMapping("/measurementsbytype/{type}")
     private List<Measurement> getMeasurementsByType(@PathVariable String type) {
         return measurementRepository.findByType(type);
     }
-
- */
 
     @GetMapping("/measurementsbyvalue/{value}")
     private List<Measurement> getMeasurementsByValue(@PathVariable int value) {
@@ -76,26 +71,23 @@ public class MeasurementController {
     @GetMapping("/measurementsbylongitude/{longitude}")
     private List<Measurement> getMeasurementsByLongitude(@PathVariable double longitude) {
         return measurementRepository.findByLongitude(longitude);
-    }
+    }*/
 
     @PostMapping("/inputmeasurement")
     private void addMeasurement(@RequestBody Measurement measurement) {
-        if (!sensorRepository.existsById(measurement.getSensor().getSensorid())){
-            throw new ResourceNotFoundException("Sensor not found with id:" + measurement.getSensor().getSensorid());
+        if (!tripRepository.existsById(measurement.getTrip().getTripId())){
+            throw new ResourceNotFoundException("Trip not found with id: " + measurement.getTrip().getTripId());
         } else {
-            if (!measurementRepository.existsById(measurement.getMeasurementid())){
-                if (!tripRepository.existsById(measurement.getTripId())) {
-                    tripRepository.save(measurement.getTrip());
-                }
-                if (!measurementTypeRepository.existsById(measurement.getMeasurementtype().getId())){
-                    measurementTypeRepository.save(measurement.getMeasurementtype());
+            if (!measurementRepository.existsById(measurement.getMeasurementId())){
+                if (!measurementTypeRepository.existsById(measurement.getMeasurementType().getId())){
+                    measurementTypeRepository.save(measurement.getMeasurementType());
                 }
                 measurementRepository.save(measurement);
-            } else throw new ResourceNotFoundException("Measurement already exists with id:" + measurement.getMeasurementid());
+            } else throw new ResourceNotFoundException("Measurement already exists with id: " + measurement.getMeasurementId());
         }
     }
 
-    @DeleteMapping("/deleteall/{password}")
+    /*@DeleteMapping("/deleteall/{password}")
     private void deleteAll(@PathVariable String password) throws IllegalAccessException {
         if (password.equals("Alexanderfc1997")) {
             measurementRepository.deleteAll();
@@ -124,7 +116,7 @@ public class MeasurementController {
             throw new IllegalAccessException("Password supplied is not the correct password for deleting all records");
         }
     }
-/*
+
     @DeleteMapping("/deletebytype/{password}/{type}")
     private void deleteByType(@PathVariable String password,
                               @PathVariable String type) throws IllegalAccessException {
@@ -134,8 +126,6 @@ public class MeasurementController {
             throw new IllegalAccessException("Password supplied is not the correct password for deleting all records");
         }
     }
-
- */
 
     @DeleteMapping("/deletebyvalue/{password}/{value}")
     private void deleteByValue(@PathVariable String password,
@@ -165,5 +155,5 @@ public class MeasurementController {
         } else {
             throw new IllegalAccessException("Password supplied is not the correct password for deleting all records");
         }
-    }
+    }*/
 }
