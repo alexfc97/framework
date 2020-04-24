@@ -35,7 +35,7 @@ public class Trip implements Serializable {
     private List<Measurement> measurements;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "DeviceId")
     @JsonBackReference(value = "device")
     private Device device;
 }

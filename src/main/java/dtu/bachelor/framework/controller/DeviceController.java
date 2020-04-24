@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/devices/api")
+@CrossOrigin
 public class DeviceController {
 
     @Autowired
@@ -20,11 +21,17 @@ public class DeviceController {
     private SourceTypeRepository sourceTypeRepository;
 
     @GetMapping("/devices")
+    @CrossOrigin
     private List<Device> getAllDevices() {
         return deviceRepository.findAll();
     }
 
+    @GetMapping("/exists/{id}")
+    @CrossOrigin
+    private boolean deviceExists(@PathVariable int id) { return deviceRepository.existsById(id);}
+
     @PostMapping("/inputdevice")
+    @CrossOrigin
     private void addDevice(@RequestBody Device device) {
         if (!sourceTypeRepository.existsById(device.getSourceType().getSourceTypeId())){
             throw new ResourceNotFoundException("sourceType not found with id: " + device.getSourceType().getSourceTypeId());
