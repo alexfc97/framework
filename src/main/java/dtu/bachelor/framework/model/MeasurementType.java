@@ -1,6 +1,7 @@
 package dtu.bachelor.framework.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
+@JsonPropertyOrder({"id","type","unit"})
 public class MeasurementType implements Serializable {
 
     @Id
@@ -17,6 +19,8 @@ public class MeasurementType implements Serializable {
     private int id;
 
     private String type;
+
+    private String unit;
 
     @OneToMany(mappedBy = "measurementType",cascade = CascadeType.MERGE)
     private List<Measurement> measurement;

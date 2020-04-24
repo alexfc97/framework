@@ -37,7 +37,7 @@ public class MeasurementController {
         return measurementRepository.findAll();
     }
 
-    @GetMapping("/measurementsbyid/{id}")
+    /*@GetMapping("/measurementsbyid/{id}")
     private Optional<Measurement> getMeasurementsById(@PathVariable int id) {
         return measurementRepository.findById(id);
     }
@@ -52,13 +52,11 @@ public class MeasurementController {
                                                      @PathVariable LocalDateTime time2) {
         return measurementRepository.findBetweenTimes(time1,time2);
     }
-/*
+
     @GetMapping("/measurementsbytype/{type}")
     private List<Measurement> getMeasurementsByType(@PathVariable String type) {
         return measurementRepository.findByType(type);
     }
-
- */
 
     @GetMapping("/measurementsbyvalue/{value}")
     private List<Measurement> getMeasurementsByValue(@PathVariable int value) {
@@ -73,7 +71,7 @@ public class MeasurementController {
     @GetMapping("/measurementsbylongitude/{longitude}")
     private List<Measurement> getMeasurementsByLongitude(@PathVariable double longitude) {
         return measurementRepository.findByLongitude(longitude);
-    }
+    }*/
 
     @PostMapping("/inputmeasurement")
     private void addMeasurement(@RequestBody Measurement measurement) {
@@ -89,7 +87,7 @@ public class MeasurementController {
         }
     }
 
-    @DeleteMapping("/deleteall/{password}")
+    /*@DeleteMapping("/deleteall/{password}")
     private void deleteAll(@PathVariable String password) throws IllegalAccessException {
         if (password.equals("Alexanderfc1997")) {
             measurementRepository.deleteAll();
@@ -118,7 +116,7 @@ public class MeasurementController {
             throw new IllegalAccessException("Password supplied is not the correct password for deleting all records");
         }
     }
-/*
+
     @DeleteMapping("/deletebytype/{password}/{type}")
     private void deleteByType(@PathVariable String password,
                               @PathVariable String type) throws IllegalAccessException {
@@ -128,8 +126,6 @@ public class MeasurementController {
             throw new IllegalAccessException("Password supplied is not the correct password for deleting all records");
         }
     }
-
- */
 
     @DeleteMapping("/deletebyvalue/{password}/{value}")
     private void deleteByValue(@PathVariable String password,
@@ -159,5 +155,5 @@ public class MeasurementController {
         } else {
             throw new IllegalAccessException("Password supplied is not the correct password for deleting all records");
         }
-    }
+    }*/
 }

@@ -35,8 +35,8 @@ public class DeviceController {
         }
     }
 
-    @DeleteMapping("/deletebyid/{id}")
+  /*  @DeleteMapping("/deletebyid/{id}")
     private void deleteDevice(@PathVariable int id) {
         deviceRepository.deleteById(id);
-    }
+    }*/
 }
