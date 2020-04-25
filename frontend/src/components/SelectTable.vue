@@ -3,12 +3,12 @@
         <h3 align="center">
             Please choose what table you would like to view!
         </h3>
-        <div class="col-4 offset-4">
-            <b-form-select v-model="tableMessage" :options="measurementOptions" v-on:change="$emit(tableMessage)"></b-form-select>
-            <div align="center" class="mt-3">
-                Selected:
-                <strong>{{ tableMessage }}</strong>
-            </div>
+        <div class="col-4 offset-4 mb-4">
+            <b-row>
+                <b-col>
+                    <b-form-select v-model="tableMessage" :options="Options" v-on:change="emitToParent"></b-form-select>
+                </b-col>
+            </b-row>
         </div>
     </section>
 </template>
@@ -18,38 +18,56 @@
         name: "radioButtons",
         data() {
             return {
+                measurementform:
+                {
+                    measurementid: null,
+                    time:null,
+                    value:null,
+                    type:null,
+                    latitude:null,
+                    longitude:null
+                },
                 tableMessage: '',
-                measurementOptions: [
+                Options: [
                     {
                         value: null,
                         text:'Please select an option'
                     },
                     {
-                        value: 'Measurements',
+                        value: 'sourceTypes',
+                        text: 'Source Types'
+                    },
+                    {
+                        value: 'devices',
+                        text: 'Devices'
+                    },
+                    {
+                        value: 'trips',
+                        text: 'Trips'
+                    },
+                    {
+                        value: 'measurements',
                         text: 'Measurements'
                     },
                     {
-                        value: 'Sensors',
-                        text: 'Sensors'
-                    },
-                    {
-                        value: 'Sensor Types',
-                        text: 'Sensor Types'
-                    },
-                    {
-                        value: 'Measurement Types',
+                        value: 'measurementTypes',
                         text: 'Measurement Types'
                     }
                 ],
-                sensorOptions: [
-
+                value: null,
+                radiooptions: [
+                    { text: 'First radio', value: 'first' },
+                    { text: 'Second radio', value: 'second' },
+                    { text: 'Third radio', value: 'third' }
                 ]
-
             }
         },
         methods: {
             emitToParent () {
                 this.$emit('childToParent',this.tableMessage)
+            },
+            resetModal(){
+                this.value=null
             }
         }
     }

@@ -28,17 +28,18 @@
                     </b-input-group>
                 </b-form-group>
             </b-col>
+
         </b-row>
 
-        <b-row>
+       <!-- <b-row>
             <download-csv
                     class="btn btn-primary offset-10"
                     :data="items"
                     name = "tripdata.csv">
                 Download Data
             </download-csv>
-
-        </b-row>
+        </b-row>-->
+   <!--     <buttons :items="items"/>-->
 
         <!-- Main table element -->
         <b-table
@@ -57,6 +58,7 @@
 
 <script>
     import axios from 'axios';
+    //import buttons from "./buttons";
 
     const measurementURL = 'http://localhost:8081/measurements/api/measurements';
     // const sensorURL = 'http://localhost:8081/sensors/api/sensors';
@@ -66,10 +68,12 @@
         props:{
             table: String,
         },
+        components: {
+            //buttons
+        },
         data() {
             return {
                 tripData:[
-
                 ],
                 items: [
                 {
@@ -89,117 +93,7 @@
                     "value": 300,
                     "latitude":32.01773,
                     "longitude":25.01773
-            },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                },
-                {
-                    "measurementid":100,
-                    "tripid":200,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 300,
-                    "latitude":32.01773,
-                    "longitude":25.01773
-                },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                },
-                {
-                    "measurementid":100,
-                    "tripid":200,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 300,
-                    "latitude":32.01773,
-                    "longitude":25.01773
-                },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                },
-                {
-                    "measurementid":100,
-                    "tripid":200,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 300,
-                    "latitude":32.01773,
-                    "longitude":25.01773
-                },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                },
-                {
-                    "measurementid":100,
-                    "tripid":200,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 300,
-                    "latitude":32.01773,
-                    "longitude":25.01773
-                },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                },
-                {
-                    "measurementid":100,
-                    "tripid":200,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 300,
-                    "latitude":32.01773,
-                    "longitude":25.01773
-                },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                },
-                {
-                    "measurementid":100,
-                    "tripid":200,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 300,
-                    "latitude":32.01773,
-                    "longitude":25.01773
-                },{
-                    "measurementid":69,
-                    "tripid":420,
-                    "time":"2020-04-06T07:14:01.071",
-                    "type":"Temperature",
-                    "value": 120,
-                    "latitude":32.68741,
-                    "longitude":25.01773
-                    }],
+            }],
                 fields: [
                     {
                         key:'measurementid',
@@ -231,7 +125,7 @@
             try {
                 const res = await axios.get(measurementURL);
                 this.tripData = res.data;
-                console.log(res);
+                console.log(this.tripData)
             } catch (e) {
                 console.error(e)
             }

@@ -1,6 +1,7 @@
 package dtu.bachelor.framework.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,26 +10,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@JsonPropertyOrder({"measurementId","time","value","type","latitude","longitude"})
 public class Measurement implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private int measurementid;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Sensor_id")
-    @JsonBackReference(value = "sensor")
-    private Sensor sensor;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "trip_id")
-    @JsonBackReference(value = "trip")
-    private Trip trip;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Measurement_id")
-    @JsonBackReference(value = "measurementtype")
-    private MeasurementType measurementtype;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int measurementId;
 
     private LocalDateTime time;
 
@@ -38,16 +25,26 @@ public class Measurement implements Serializable {
 
     private double longitude;
 
-    // public int getSensorId(){ return sensor.getSensorid(); }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "trip_id")
+    @JsonBackReference(value = "trip")
+    private Trip trip;
 
-    public String gettype() { return measurementtype.getType(); }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "measurementType_Id")
+    @JsonBackReference(value = "measurementType")
+    private MeasurementType measurementType;
 
-    public int getTripId(){ return trip.getTripid(); }
+    @OneToOne(cascade = CascadeType.MERGE)
+    private MapReference mapReference;
 
-    // public int getMeasurementTypeId() { return measurementtype.getId(); }
+    public String gettype() { return measurementType.getType();}
 
-    // public int getDeviceId() { return sensor.getDeviceId(); }
+    public int getSourceType() { return trip.getDevice().getSourceType().getSourceTypeId();}
 
-    // public int getCarId(){ return sensor.getCarId(); }
+    public int getDeviceId() { return trip.getDevice().getDeviceId();}
 
+    public int getTripId() { return trip.getTripId();}
+
+    public int getMeasurementId() { return measurementId; }
 }
