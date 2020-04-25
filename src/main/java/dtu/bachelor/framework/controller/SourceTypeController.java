@@ -17,6 +17,7 @@ public class SourceTypeController {
     private SourceTypeRepository sourceTypeRepository;
 
     @GetMapping("/sourcetypes")
+    @CrossOrigin
     private List<SourceType> getSourceType(){
         return sourceTypeRepository.findAll();
     }

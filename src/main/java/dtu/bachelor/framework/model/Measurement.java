@@ -39,4 +39,12 @@ public class Measurement implements Serializable {
     private MapReference mapReference;
 
     public String gettype() { return measurementType.getType();}
+
+    public int getSourceType() { return trip.getDevice().getSourceType().getSourceTypeId();}
+
+    public int getDeviceId() { return trip.getDevice().getDeviceId();}
+
+    public int getTripId() { return trip.getTripId();}
+
+    public int getMeasurementId() { return measurementId; }
 }

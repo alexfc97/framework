@@ -20,6 +20,7 @@ public class TripController {
     private DeviceRepository deviceRepository;
 
     @GetMapping("/trips")
+    @CrossOrigin
     private List<Trip> getAllTrips(){ return tripRepository.findAll();}
 
     @PostMapping("/createtrip")

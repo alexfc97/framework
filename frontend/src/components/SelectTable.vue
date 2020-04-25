@@ -5,8 +5,8 @@
         </h3>
         <div class="col-4 offset-4 mb-4">
             <b-row>
-                <b-col cols="12">
-                    <b-form-select :value="null" v-model="tableMessage" :options="measurementOptions" v-on:change="emitToParent"></b-form-select>
+                <b-col>
+                    <b-form-select v-model="tableMessage" :options="Options" v-on:change="emitToParent"></b-form-select>
                 </b-col>
             </b-row>
         </div>
@@ -28,13 +28,13 @@
                     longitude:null
                 },
                 tableMessage: '',
-                measurementOptions: [
+                Options: [
                     {
                         value: null,
                         text:'Please select an option'
                     },
                     {
-                        value: 'sourcetypes',
+                        value: 'sourceTypes',
                         text: 'Source Types'
                     },
                     {
@@ -50,15 +50,24 @@
                         text: 'Measurements'
                     },
                     {
-                        value: 'measurementtypes',
+                        value: 'measurementTypes',
                         text: 'Measurement Types'
                     }
+                ],
+                value: null,
+                radiooptions: [
+                    { text: 'First radio', value: 'first' },
+                    { text: 'Second radio', value: 'second' },
+                    { text: 'Third radio', value: 'third' }
                 ]
             }
         },
         methods: {
             emitToParent () {
                 this.$emit('childToParent',this.tableMessage)
+            },
+            resetModal(){
+                this.value=null
             }
         }
     }
