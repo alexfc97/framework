@@ -13,6 +13,10 @@ public class MapReference implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int mapReferenceId;
 
+    private boolean latitude;
+
+    private boolean longitude;
+
     @OneToOne(cascade = CascadeType.MERGE)
     private Measurement measurement;
 }

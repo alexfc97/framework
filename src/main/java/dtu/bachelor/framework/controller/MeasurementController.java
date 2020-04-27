@@ -7,13 +7,12 @@ import dtu.bachelor.framework.repository.DeviceRepository;
 import dtu.bachelor.framework.repository.MeasurementRepository;
 import dtu.bachelor.framework.repository.MeasurementTypeRepository;
 import dtu.bachelor.framework.repository.TripRepository;
+import dtu.bachelor.framework.service.Interpolation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/measurements/api")
@@ -79,11 +78,32 @@ public class MeasurementController {
             throw new ResourceNotFoundException("Trip not found with id: " + measurement.getTrip().getTripId());
         } else {
             if (!measurementRepository.existsById(measurement.getMeasurementId())){
-                if (!measurementTypeRepository.existsById(measurement.getMeasurementType().getId())){
+                if (!measurementTypeRepository.existsByType(measurement.getMeasurementType().getType())){
                     measurementTypeRepository.save(measurement.getMeasurementType());
                 }
                 measurementRepository.save(measurement);
             } else throw new ResourceNotFoundException("Measurement already exists with id: " + measurement.getMeasurementId());
+        }
+    }
+
+    @PostMapping("/inputmeasurements")
+    private void addMeasurements(@RequestBody List<Measurement> measurementList) {
+
+        Interpolation interpolation = new Interpolation();
+        interpolation.Interpolate(measurementList,"linear");
+
+        for (Measurement measurement : measurementList) {
+            if (!tripRepository.existsById(measurement.getTrip().getTripId())) {
+                throw new ResourceNotFoundException("Trip not found with id: " + measurement.getTrip().getTripId());
+            } else {
+                if (!measurementRepository.existsById(measurement.getMeasurementId())) {
+                    if (!measurementTypeRepository.existsByType(measurement.getMeasurementType().getType())) {
+                        measurementTypeRepository.save(measurement.getMeasurementType());
+                    }
+                    measurementRepository.save(measurement);
+                } else
+                    throw new ResourceNotFoundException("Measurement already exists with id: " + measurement.getMeasurementId());
+            }
         }
     }
 

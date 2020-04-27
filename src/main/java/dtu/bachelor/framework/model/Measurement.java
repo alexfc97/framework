@@ -31,7 +31,7 @@ public class Measurement implements Serializable {
     private Trip trip;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "measurementType_Id")
+    @JoinColumn(name = "measurementType_id")
     @JsonBackReference(value = "measurementType")
     private MeasurementType measurementType;
 
