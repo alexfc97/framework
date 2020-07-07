@@ -16,8 +16,5 @@ public class MeasurementTypeController {
 
     @GetMapping("/measurementtypes")
     @CrossOrigin
-    private List<MeasurementType> getAllMeasurementTypes(){return measurementTypeRepository.findAll();}
-
-/*    @DeleteMapping("/deletebyid/{id}")
-    private void deleteMeasurementTypeById(@PathVariable int id){measurementTypeRepository.deleteById(id);}*/
+    public List<MeasurementType> getAllMeasurementTypes(){return measurementTypeRepository.findAll();}
 }

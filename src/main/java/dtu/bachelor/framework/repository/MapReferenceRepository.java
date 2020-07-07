@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MapReferenceRepository extends JpaRepository<MapReference,Integer> {
-
-    MapReference findByMeasurement_MeasurementId(Integer Measurementid);
 }

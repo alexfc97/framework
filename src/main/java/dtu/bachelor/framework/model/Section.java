@@ -19,7 +19,7 @@ public class Section implements Serializable {
     @OneToMany
     private List<Node> nodes;
 
-    @ManyToOne(optional = false)
+    @ManyToOne()
     private Road road;
 
     public Road getRoad() {

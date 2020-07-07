@@ -17,6 +17,6 @@ public class SectionController {
     @Autowired
     private SectionRepository sectionRepository;
 
-    @GetMapping("sections")
-    public List<Section> getRoads() { return sectionRepository.findAll();}
+    @GetMapping("/sections")
+    public List<Section> getSections() { return sectionRepository.findAll();}
 }

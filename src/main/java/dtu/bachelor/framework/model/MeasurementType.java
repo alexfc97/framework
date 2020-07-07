@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Data
-@JsonPropertyOrder({"id","type","unit"})
+@JsonPropertyOrder({"type","unit"})
 public class MeasurementType implements Serializable {
 
     @Id
