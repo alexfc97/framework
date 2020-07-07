@@ -7,7 +7,9 @@ import dtu.bachelor.framework.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/trips/api")
@@ -21,19 +23,28 @@ public class TripController {
 
     @GetMapping("/trips")
     @CrossOrigin
-    private List<Trip> getAllTrips(){ return tripRepository.findAll();}
+    public List<Trip> getAllTrips(){ return tripRepository.findAll();}
+
+    @GetMapping("/trip/{id}")
+    @CrossOrigin
+    public Optional<Trip> getTripById(@PathVariable int id) {return tripRepository.findById(id);}
 
     @PostMapping("/createtrip")
-    private void createNewTrip(@RequestBody Trip trip){
+    @CrossOrigin
+    public void createNewTrip(@RequestBody Trip trip){
         if (!deviceRepository.existsById(trip.getDevice().getDeviceId())){
             throw new ResourceNotFoundException("Device not found with id: " + trip.getDevice().getDeviceId());
         } else{
             if (!tripRepository.existsById(trip.getTripId())) {
+                if (trip.getStartTime() == null) {
+                    LocalDateTime now = LocalDateTime.now();
+                    trip.setStartTime(now);
+                }
                 tripRepository.save(trip);
-            } else throw new ResourceNotFoundException("Trip already exists with id:" + trip.getTripId());
+            } else throw new ResourceNotFoundException("Trip already exists with id: " + trip.getTripId());
         }
     }
 
     @DeleteMapping("/deletetripsbyid/{id}")
-    private void deleteTripById(@PathVariable int id){tripRepository.deleteById(id);}
+    public void deleteTripById(@PathVariable int id){tripRepository.deleteById(id);}
 }

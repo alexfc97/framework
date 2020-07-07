@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@JsonPropertyOrder({"measurementId","time","value","type","latitude","longitude"})
+@JsonPropertyOrder({"measurementId","time","value","measurementType","latitude","longitude","sourceType","tripId","deviceId","mapReference"})
 public class Measurement implements Serializable {
 
     @Id
@@ -31,20 +31,18 @@ public class Measurement implements Serializable {
     private Trip trip;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "measurementType_Id")
+    @JoinColumn(name = "measurementType_id")
     @JsonBackReference(value = "measurementType")
     private MeasurementType measurementType;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private MapReference mapReference;
 
-    public String gettype() { return measurementType.getType();}
-
-    public int getSourceType() { return trip.getDevice().getSourceType().getSourceTypeId();}
-
-    public int getDeviceId() { return trip.getDevice().getDeviceId();}
-
     public int getTripId() { return trip.getTripId();}
 
-    public int getMeasurementId() { return measurementId; }
+    public MapReference getMapReference() { return mapReference; }
+
+    public MeasurementType getMeasurementType() { return measurementType; }
+
+    public String getType() { return measurementType.getType(); }
 }

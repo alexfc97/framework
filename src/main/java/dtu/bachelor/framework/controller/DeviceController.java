@@ -7,6 +7,7 @@ import dtu.bachelor.framework.repository.SourceTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,28 +23,27 @@ public class DeviceController {
 
     @GetMapping("/devices")
     @CrossOrigin
-    private List<Device> getAllDevices() {
+    public List<Device> getAllDevices() {
         return deviceRepository.findAll();
     }
 
     @GetMapping("/exists/{id}")
     @CrossOrigin
-    private boolean deviceExists(@PathVariable int id) { return deviceRepository.existsById(id);}
+    public boolean deviceExists(@PathVariable int id) { return deviceRepository.existsById(id);}
 
     @PostMapping("/inputdevice")
     @CrossOrigin
-    private void addDevice(@RequestBody Device device) {
+    public void addDevice(@RequestBody Device device) {
         if (!sourceTypeRepository.existsById(device.getSourceType().getSourceTypeId())){
             throw new ResourceNotFoundException("sourceType not found with id: " + device.getSourceType().getSourceTypeId());
         } else{
             if (!deviceRepository.existsById(device.getDeviceId())) {
+                if (device.getTime() == null) {
+                    LocalDateTime now = LocalDateTime.now();
+                    device.setTime(now);
+                }
                 deviceRepository.save(device);
-            } else throw new ResourceNotFoundException("Device already exists with id:" + device.getDeviceId());
+            } else throw new ResourceNotFoundException("Device already exists with id: " + device.getDeviceId());
         }
     }
-
-  /*  @DeleteMapping("/deletebyid/{id}")
-    private void deleteDevice(@PathVariable int id) {
-        deviceRepository.deleteById(id);
-    }*/
 }

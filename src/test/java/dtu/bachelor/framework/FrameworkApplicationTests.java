@@ -10,4 +10,9 @@ class FrameworkApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void main() {
+		FrameworkApplication.main(new String[] {});
+	}
+
 }

@@ -28,6 +28,4 @@ public class Device {
 
     @OneToMany(mappedBy = "device")
     private List<Trip> trips;
-
-    public SourceType getSourceType(){ return sourceType;}
 }

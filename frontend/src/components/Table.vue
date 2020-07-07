@@ -57,15 +57,36 @@
                 </b-alert>
             </b-col>
             <b-col>
-                <download-csv
-                        class="btn btn-primary offset-4"
-                        :data="measurementData"
-                        :name = 'downloadName'>
-                    Download Data
-                </download-csv>
+                <b-row>
+                    <b-button
+                            v-b-modal.modaldownload
+                            variant="primary">
+                                Download Data
+                    </b-button>
+                </b-row>
+                <b-modal id="modaldownload"
+                         title="Download Page"
+                         hide-footer>
+                    <b-row>
+                        <download-csv
+                                class="btn btn-primary offset-4 mb-4"
+                                :data   = "Data"
+                                separator-excel>
+                            Download Data as CSV
+                        </download-csv>
+                    </b-row>
+                    <b-row align="center">
+                        <download-excel
+                                class   = "btn btn-primary offset-4"
+                                :data   = "Data">
+                            Download Data as Excel
+                        </download-excel>
+                    </b-row>
+                </b-modal>
             </b-col>
         </b-row>
         <b-table
+            ref="table"
             :items="Data"
             :fields="Fields"
             :filter="filter"
@@ -76,6 +97,8 @@
             head-variant="dark"
             bordered
             small
+            data-show-refresh=true
+            refreshed
             >
             <template v-slot:cell(mapReference)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
@@ -87,15 +110,27 @@
                     <b-row class="mb-2">
                         <b-col sm="3" class="text-sm-right"><b>Map Reference:</b></b-col>
                         <b-col v-if="row.item.mapReference == null">No map matched location has been set for this measurement!</b-col>
-                        <b-col v-else>{{ row.item.mapReference}}</b-col>
+                        <b-col v-else>
+                            <p>
+                                Map Reference ID : {{row.item.mapReference.mapReferenceId}}
+                            </p>
+                            <p>
+                                Map Reference Latitude : {{row.item.mapReference.mapmatched_latitude}}
+                            </p>
+                            <p>
+                                Map Reference Longitude : {{row.item.mapReference.mapmatched_longitude}}
+                            </p>
+                        </b-col>
                     </b-row>
                 </b-card>
             </template>
+            <template v-slot:table-busy>
+                <div class="text-center text-danger my-2">
+                    <b-spinner class="align-middle"></b-spinner>
+                    <strong>Loading...</strong>
+                </div>
+            </template>
         </b-table>
-
-        <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-            <pre>{{ infoModal.content }}</pre>
-        </b-modal>
     </b-container>
 </template>
 
@@ -110,7 +145,8 @@
     export default {
         data() {
             return {
-                Data:[],
+                Data:[{
+                    sourcetypeID: null , time:null , name: null}],
                 Fields:[],
                 downloadName: 'idk',
                 filter: null,
@@ -126,6 +162,9 @@
                     },
                     {
                         key: 'time', label: 'Time', sortable: true
+                    },
+                    {
+                        key: 'sourceTypeName', label: 'Name', sortable: true
                     }
                 ],
                 deviceFields:[
@@ -171,7 +210,7 @@
                         key: 'tripId', label: 'Trip ID', sortable: true
                     },
                     {
-                        key: 'time', label: 'Timestamp', sortable: true
+                        key: 'time', label: 'Time', sortable: true
                     },
                     {
                         key: 'value', label: 'Value', sortable: true
@@ -191,9 +230,6 @@
                 ],
                 typeFields:[
                     {
-                        key: 'id', label: 'ID', sortable: true
-                    },
-                    {
                         key: 'type', label: 'Type', sortable: true
                     },
                     {
@@ -206,16 +242,20 @@
                     id: 'info-modal',
                     title: '',
                     content: ''
-                }
+                },
+                isBusy: false,
             }
         },
         methods: {
+            toggleBusy() {
+                this.isBusy = !this.isBusy
+            },
             download() {
                 if (this.filterOn.length){
-                    this.downloadName = '' + this.filterOn.join("+") + '_data' + '.csv'
+                        this.downloadName = '' + this.filterOn.join("+") + '_data' + '.csv'
                     console.log(this.downloadName)
                 } else {
-                    this.downloadName = '' + '_data' + '.csv'
+                    this.downloadName = 'data' + '.csv'
                     console.log(this.downloadName)
                 }
             },
@@ -226,6 +266,8 @@
                 this.dismissCountDown = dismissCountDown
             },
             updateTable() {
+                this.toggleBusy()
+                this.update()
                 if (this.PickedTable === 'measurements'){
                     this.Data = this.measurementData
                     this.Fields = this.measurementFields
@@ -242,47 +284,42 @@
                     this.Data = this.sourceTypeData
                     this.Fields = this.sourceTypeFields
                 }
-                this.update()
+                this.$refs.table.$forceUpdate()
+                this.$refs.table.refresh()
                 this.showAlert()
-            },
-            info(item, index, button) {
-                this.infoModal.title = `Row index: ${index}`
-                this.infoModal.content = JSON.stringify(item, null, 2)
-                this.$root.$emit('bv::show::modal', this.infoModal.id, button)
-            },
-            resetInfoModal() {
-                this.infoModal.title = ''
-                this.infoModal.content = ''
+                this.toggleBusy()
             },
             async update(){
                 try {
-                    const ressource = await axios.get(sourceURL)
-                    const resdev = await axios.get(deviceURL)
-                    const restrip = await axios.get(tripURL)
-                    const resmeas = await axios.get(measurementURL)
-                    const restypes = await axios.get(TypeURL)
-                    this.sourceTypeData = ressource.data
-                    this.deviceData = resdev.data
-                    this.tripData = restrip.data
-                    this.measurementData = resmeas.data
-                    this.typeData = restypes.data
+                    const source = await axios.get(sourceURL)
+                    const dev = await axios.get(deviceURL)
+                    const trip = await axios.get(tripURL)
+                    const meas = await axios.get(measurementURL)
+                    const types = await axios.get(TypeURL)
+                    this.sourceTypeData = source.data
+                    this.deviceData = dev.data
+                    this.tripData = trip.data
+                    this.measurementData = meas.data
+                    this.typeData = types.data
+                    this.$refs.table.refresh()
                 } catch (e) {
                     console.error(e)
                 }
             }
         },
-        async created() {
+        created() {
             try {
-                const ressource = await axios.get(sourceURL)
-                const resdev = await axios.get(deviceURL)
-                const restrip = await axios.get(tripURL)
-                const resmeas = await axios.get(measurementURL)
-                const restypes = await axios.get(TypeURL)
-                this.sourceTypeData = ressource.data
-                this.deviceData = resdev.data
-                this.tripData = restrip.data
-                this.measurementData = resmeas.data
-                this.typeData = restypes.data
+                let source = axios.get(sourceURL)
+                let dev = axios.get(deviceURL)
+                let trip = axios.get(tripURL)
+                let meas = axios.get(measurementURL)
+                let types = axios.get(TypeURL)
+                this.sourceTypeData = source.data
+                this.deviceData = dev.data
+                this.tripData = trip.data
+                this.measurementData = meas.data
+                this.typeData = types.data
+                this.$refs.table.refresh()
             } catch (e) {
                 console.error(e)
             }
