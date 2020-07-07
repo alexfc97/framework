@@ -83,7 +83,7 @@ public class MeasurementControllerTest {
         List<Measurement> measurementList1 = new ArrayList<>();
         measurementList1.add(measurement);
         measurementList1.add(measurement1);
-        measurementController.addMeasurements(measurementList1);
+        measurementRepository.saveAll(measurementList1);
 
         // when
         List<Measurement> measurementList = measurementController.getAllMeasurements();
