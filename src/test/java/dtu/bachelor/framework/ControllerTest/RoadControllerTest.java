@@ -12,15 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class RoadControllerTest {
+public class  RoadControllerTest {
 
     @AfterClass
     public static void clear(){
@@ -71,16 +68,13 @@ public class RoadControllerTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(section);
         road.setSections(sectionList);
-        road.setRoadid(1);
         roadRepository.save(road);
 
         // when
-        Road result = roadController.getRoadById(road.getRoadid()).orElse(null);
+        Optional<Road> result = roadController.getRoadById(road.getRoadid());
 
         // then
-        if (result != null) {
-            assertThat(result.hashCode() == road.hashCode());
-        }
+        assertThat(result.hashCode() == road.hashCode());
 
     }
     @Test

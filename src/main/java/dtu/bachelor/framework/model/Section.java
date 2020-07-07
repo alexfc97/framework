@@ -2,10 +2,7 @@ package dtu.bachelor.framework.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 public class Section implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int OSMWayPointId;
 
     @OneToMany
@@ -21,12 +19,4 @@ public class Section implements Serializable {
 
     @ManyToOne()
     private Road road;
-
-    public Road getRoad() {
-        return road;
-    }
-
-    public void setRoad(Road road) {
-        this.road = road;
-    }
 }

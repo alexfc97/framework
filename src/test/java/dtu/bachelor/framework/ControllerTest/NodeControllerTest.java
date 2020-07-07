@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -95,10 +96,12 @@ public class NodeControllerTest {
         nodeRepository.save(node);
 
         // when
-        List<Node> result = nodeController.getNodes();
+        Optional<Node> node1 = nodeController.getNodeById(node.getNodeid());
+
 
         // then
-        assertThat(result.get(0).hashCode()).isEqualTo(node.hashCode());
+        assertThat(node1.hashCode()).isEqualTo(node.hashCode());
+
     }
 
     @Test
