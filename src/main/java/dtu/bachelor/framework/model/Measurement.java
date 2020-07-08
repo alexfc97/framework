@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@JsonPropertyOrder({"measurementId","time","value","measurementType","latitude","longitude","sourceType","tripId","deviceId","mapReference"})
+@JsonPropertyOrder({"measurementId","time","value","measurementType","latitude","longitude","sourceType","tripId","deviceId","MapReferenceLatitude","MapReferenceLongitude"})
 public class Measurement implements Serializable {
 
     @Id
@@ -41,6 +41,10 @@ public class Measurement implements Serializable {
     public int getTripId() { return trip.getTripId();}
 
     public MapReference getMapReference() { return mapReference; }
+
+    public double getMapReferenceLatitude() { return mapReference.getMapmatched_latitude(); }
+
+    public double getMapReferenceLongitude() { return mapReference.getMapmatched_longitude(); }
 
     public MeasurementType getMeasurementType() { return measurementType; }
 

@@ -60,6 +60,7 @@
                 <b-row>
                     <b-button
                             v-b-modal.modaldownload
+                            @click="download"
                             variant="primary">
                                 Download Data
                     </b-button>
@@ -70,15 +71,18 @@
                     <b-row>
                         <download-csv
                                 class="btn btn-primary offset-4 mb-4"
-                                :data   = "Data"
+                                :data   = "downloadData"
+                                :fields = "jsonfields"
+                                :name   = "downloadName"
                                 separator-excel>
                             Download Data as CSV
                         </download-csv>
                     </b-row>
                     <b-row align="center">
                         <download-excel
-                                class   = "btn btn-primary offset-4"
-                                :data   = "Data">
+                                class = "btn btn-primary offset-4"
+                                :data = "downloadData"
+                                :name = "downloadName">
                             Download Data as Excel
                         </download-excel>
                     </b-row>
@@ -98,7 +102,9 @@
             bordered
             small
             data-show-refresh=true
+            show-empty
             refreshed
+            v-model="downloadData"
             >
             <template v-slot:cell(mapReference)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
@@ -145,17 +151,22 @@
     export default {
         data() {
             return {
-                Data:[{
-                    sourcetypeID: null , time:null , name: null}],
-                Fields:[],
+                Data: [],
+                Fields: [],
+                jsonsourcetypefields: ["sourceTypeId","time","sourceTypeName"],
+                jsondevicefields: ["deviceId","carId","time"],
+                jsontripfields: ["tripId","startTime","endTime","distance","durartion","startPositionLon","startPositionLat","endPositionLon","endPositionLat"],
+                jsonmeasurementfields: ["measurementId","time","value","latitude","longitude","tripid","type","mapReferenceLongitude","mapReferenceLatitude"],
+                jsonmeasurementtypefields: ["type","unit"],
+                jsonfields: [],
                 downloadName: 'idk',
                 filter: null,
                 filterOn: [],
-                sourceTypeData:[],
-                deviceData:[],
-                tripData:[],
+                sourceTypeData: [],
+                deviceData: [],
+                tripData: [],
                 measurementData: [],
-                typeData:[],
+                typeData: [],
                 sourceTypeFields:[
                     {
                         key: 'sourceTypeId', label: 'Source Type ID', sortable: true
@@ -225,8 +236,11 @@
                         key: 'type', label: 'Type', sortable: true
                     },
                     {
-                        key: 'mapReference',  label: 'Map Matched Location', sortable: true
-                    }
+                        key: 'mapReferenceLatitude',  label: 'Map Matched Latitude', sortable: true
+                    },
+                    {
+                        key: 'mapReferenceLongitude',  label: 'Map Matched Longitude', sortable: true
+                    },
                 ],
                 typeFields:[
                     {
@@ -244,6 +258,7 @@
                     content: ''
                 },
                 isBusy: false,
+                downloadData: []
             }
         },
         methods: {
@@ -271,23 +286,33 @@
                 if (this.PickedTable === 'measurements'){
                     this.Data = this.measurementData
                     this.Fields = this.measurementFields
+                    this.jsonfields = this.jsonmeasurementfields
                 } else if (this.PickedTable === 'measurementTypes'){
                     this.Data = this.typeData
                     this.Fields = this.typeFields
+                    this.jsonfields = this.jsonmeasurementtypefields
                 } else if (this.PickedTable === 'trips') {
                     this.Data = this.tripData
                     this.Fields = this.tripFields
+                    this.jsonfields = this.jsontripfields
                 } else if (this.PickedTable === 'devices') {
                     this.Data = this.deviceData
                     this.Fields = this.deviceFields
+                    this.jsonfields = this.jsondevicefields
                 } else if (this.PickedTable === 'sourceTypes') {
                     this.Data = this.sourceTypeData
                     this.Fields = this.sourceTypeFields
+                    this.jsonfields = this.jsonsourcetypefields
                 }
                 this.$refs.table.$forceUpdate()
                 this.$refs.table.refresh()
+                this.$root.$emit('bv::refresh::table', 'table')
                 this.showAlert()
                 this.toggleBusy()
+            },
+            exportData(items) {
+                this.downloadData = items;
+                console.log("Data updated for export!")
             },
             async update(){
                 try {
