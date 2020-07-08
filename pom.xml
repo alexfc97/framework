@@ -106,7 +106,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>WebApplication</finalName>
+		<finalName>webapplication</finalName>
 	</build>
 
 	<reporting>
